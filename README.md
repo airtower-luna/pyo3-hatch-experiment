@@ -1,6 +1,7 @@
 # pyo3-hatch-experiment
 
-This is an experiment in combining pyo3 and hatch, instead of using
+This is an experiment in combining [PyO3](https://pyo3.rs/) and
+[Hatch](https://hatch.pypa.io/latest/), instead of using
 [`maturin`](https://www.maturin.rs/) or
 [setuptools-rust](https://setuptools-rust.readthedocs.io/en/latest/). Cargo
 gets called via a [custom build
@@ -13,7 +14,8 @@ source distribution.
 ## What's experimental?
 
 * The hook assumes that the working directory of `hatchling` is also
-  where the Rust package exists (with `Cargo.toml`, etc.).
+  where the Rust package exists (with `Cargo.toml`, etc.), and where
+  the compiled module for Python should be placed.
 * Using custom build targets may need some extra care depending on
   whether the hook should or shouldn't run. The hook class itself
   doesn't check the target.
