@@ -10,6 +10,8 @@ from functools import cached_property
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
 from pathlib import Path
 
+CARGO_BIN = shutil.which('cargo')
+
 
 class CargoBuildHook(BuildHookInterface):
     @cached_property
@@ -46,7 +48,7 @@ class CargoBuildHook(BuildHookInterface):
     def initialize(self, version, build_data):
         cargo = subprocess.run(
             [
-                shutil.which('cargo'), 'build', '--lib', '--release',
+                CARGO_BIN, 'build', '--lib', '--release',
                 '--message-format=json'
             ],
             stdout=subprocess.PIPE)
@@ -62,4 +64,4 @@ class CargoBuildHook(BuildHookInterface):
 
     def clean(self, versions):
         Path(self.artifact_lib).unlink(missing_ok=True)
-        subprocess.run(['cargo', 'clean'])
+        subprocess.run([CARGO_BIN, 'clean'])
