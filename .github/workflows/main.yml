@@ -1,0 +1,31 @@
+name: CI
+
+on: [push]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Nox
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('noxfile.py', 'pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Set up Nox
+        uses: wntrblm/nox@2e8d24a2f21c8b752344ba61222b88238aac901f # 2023.04.22
+        with:
+          python-versions: '3.11'
+      - name: Run tests and report coverage
+        run: |
+          nox --report nox.json
+      - name: Create job summary
+        if: always()
+        uses: airtower-luna/nox-report-to-job-summary@v1.0.0
+        with:
+          report: nox.json
