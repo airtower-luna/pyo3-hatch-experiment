@@ -12,10 +12,6 @@ source distribution.
 
 ## What's experimental?
 
-* The hook makes some assumptions about the artifacts produced by
-  Cargo, specifically that the artifacts produced for the lib build
-  will be one per `crate-type` and listed in the same order as the
-  types in the `filenames` field of the `compiler-artifact` message.
 * The hook assumes that the working directory of `hatchling` is also
   where the Rust package exists (with `Cargo.toml`, etc.).
 * Using custom build targets may need some extra care depending on

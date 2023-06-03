@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: MIT
 # Copyright 2023 Fiona Klute
 import json
+import platform
 import shutil
 import subprocess
 import sysconfig
@@ -21,6 +22,27 @@ class CargoBuildHook(BuildHookInterface):
         return self.cargo_toml['lib']['name'] \
             + sysconfig.get_config_var('EXT_SUFFIX')
 
+    def _find_binlib(self, msg):
+        if msg['reason'] != 'compiler-artifact':
+            return None
+        if msg['target']['name'] != self.cargo_toml['package']['name']:
+            return None
+        if 'cdylib' not in msg['target']['kind']:
+            return None
+
+        match platform.system():
+            case 'Windows':
+                ending = '.dll'
+            case 'Darwin':
+                ending = '.dylib'
+            case _:
+                # Linux, and let's hope anything else is similar enough
+                ending = '.so'
+
+        for artifact in msg['filenames']:
+            if artifact.endswith(ending):
+                return artifact
+
     def initialize(self, version, build_data):
         cargo = subprocess.run(
             [
@@ -29,19 +51,8 @@ class CargoBuildHook(BuildHookInterface):
             ],
             stdout=subprocess.PIPE)
         for line in cargo.stdout.splitlines():
-            msg = json.loads(line)
-            if msg['reason'] != 'compiler-artifact':
-                continue
-            if msg['target']['name'] != self.cargo_toml['package']['name']:
-                continue
-            if 'cdylib' not in msg['target']['kind']:
-                continue
-            # This assumes that each target kind produces one file, in
-            # the same order.
-            assert len(msg['filenames']) == len(msg['target']['kind'])
-            idx = msg['target']['kind'].index('cdylib')
-            binlib = msg['filenames'][idx]
-            break
+            if (binlib := self._find_binlib(json.loads(line))) is not None:
+                break
 
         print(f'copy module {binlib} to {self.artifact_lib}')
         shutil.copyfile(binlib, self.artifact_lib)
