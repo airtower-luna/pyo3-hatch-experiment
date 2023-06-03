@@ -1,0 +1,35 @@
+[project]
+name = "pyo3_hatch_experiment"
+version = "0.1.0"
+authors = [
+  { name="Fiona Klute", email="fiona.klute@gmx.de" },
+]
+description = "Experiment in combining pyo3 and hatch"
+license = { text="MIT License" }
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/airtower-luna/pyo3-hatch-experiment"
+"Bug Tracker" = "https://github.com/airtower-luna/pyo3-hatch-experiment/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "cargo_build.py"
+
+[tool.hatch.build.targets.wheel]
+# the build hook shouldn't be installed
+exclude = [
+  "cargo_build.py",
+]

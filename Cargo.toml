@@ -1,0 +1,13 @@
+[package]
+name = "pyo3_example"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+# must match the name of the #[pymodule]
+name = "pyo3_example"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.18.3", features = ["extension-module"] }

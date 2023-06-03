@@ -1,0 +1,6 @@
+*~
+/Cargo.lock
+/dist
+/pyo3_example.*.so
+/target
+__pycache__/
