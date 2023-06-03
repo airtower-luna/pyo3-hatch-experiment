@@ -13,10 +13,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('noxfile.py', 'pyproject.toml') }}
+          path: |
+            ~/.cache/pip
+            ~/.cargo
+            target/
+          key: ${{ runner.os }}-${{ hashFiles('Cargo.toml', 'noxfile.py', 'pyproject.toml') }}
           restore-keys: |
-            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
       - name: Set up Nox
         uses: wntrblm/nox@2e8d24a2f21c8b752344ba61222b88238aac901f # 2023.04.22
         with:
