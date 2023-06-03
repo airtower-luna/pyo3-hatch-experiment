@@ -1,4 +1,4 @@
-# pyo3-hatch-experiment"
+# pyo3-hatch-experiment
 
 This is an experiment in combining pyo3 and hatch, instead of using
 [`maturin`](https://www.maturin.rs/) or
