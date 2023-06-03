@@ -12,8 +12,6 @@ source distribution.
 
 ## What's experimental?
 
-* I haven't checked if the way the hook calls Cargo will work on
-  non-Linux platforms.
 * The hook makes some assumptions about the artifacts produced by
   Cargo, specifically that the artifacts produced for the lib build
   will be one per `crate-type` and listed in the same order as the

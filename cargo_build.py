@@ -23,7 +23,10 @@ class CargoBuildHook(BuildHookInterface):
 
     def initialize(self, version, build_data):
         cargo = subprocess.run(
-            ['cargo', 'build', '--lib', '--release', '--message-format=json'],
+            [
+                shutil.which('cargo'), 'build', '--lib', '--release',
+                '--message-format=json'
+            ],
             stdout=subprocess.PIPE)
         for line in cargo.stdout.splitlines():
             msg = json.loads(line)
