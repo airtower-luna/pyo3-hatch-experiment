@@ -17,8 +17,8 @@ jobs:
           - 'windows-latest'
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.cache/pip
@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - name: Set up Nox
-        uses: wntrblm/nox@2e8d24a2f21c8b752344ba61222b88238aac901f # 2023.04.22
+        uses: wntrblm/nox@a74da2c766d4e656d6105639926c31f3aa4a6ca1 # 2025.02.09
         with:
           python-versions: '3.13'
       - name: Run tests and report coverage
