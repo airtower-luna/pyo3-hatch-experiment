@@ -8,7 +8,7 @@ pub fn add(left: usize, right: usize) -> usize {
 }
 
 #[pymodule]
-fn pyo3_example(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn pyo3_example(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(add, m)?)?;
     Ok(())
 }
