@@ -7,7 +7,7 @@ pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
-#[pymodule]
+#[pymodule(gil_used = false)]
 fn pyo3_example(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(add, m)?)?;
     Ok(())
