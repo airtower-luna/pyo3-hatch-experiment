@@ -2,6 +2,8 @@
 # Copyright 2023 Fiona Klute
 import nox
 
+nox.options.download_python = 'never'
+
 
 @nox.session
 def lint(session):
