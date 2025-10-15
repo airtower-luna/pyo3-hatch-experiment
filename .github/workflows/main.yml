@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - name: Set up Nox
-        uses: wntrblm/nox@a74da2c766d4e656d6105639926c31f3aa4a6ca1 # 2025.02.09
+        uses: wntrblm/nox@449f9352f26eb6465c0f0c7e6d89810e087f6f26 # 2025.10.14
         with:
           python-versions: '3.13'
       - name: Run tests and report coverage
